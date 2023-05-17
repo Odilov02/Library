@@ -22,6 +22,7 @@ namespace Domain.Models
         [Column("description")]
         [JsonPropertyName("description")]
         public string Description { get; set; }
-        List<AuthorBook>? AuthorBooks { get; set; }
+        [JsonIgnore]
+        IEnumerable<AuthorBook>? AuthorBooks { get; set; }
     }
 }

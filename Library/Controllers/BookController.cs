@@ -4,45 +4,45 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Library.Controllers;
+
 [Route("api/[controller]")]
 [ApiController]
 [Authorize]
-public class AuthorController : ControllerBase
+public class BookController:ControllerBase
 {
+    private readonly IBookService _bookService;
 
-    private readonly IAuthorService _authorService;
-
-    public AuthorController(IAuthorService authorService)
+    public BookController(IBookService bookService)
     {
-        _authorService = authorService;
+        _bookService=bookService;
     }
     [HttpPost]
     [Route("Add")]
-    [Authorize(Roles = "AddAuthor")]
-    public async Task<IActionResult> Add([FromBody] Author entity)
+    [Authorize(Roles ="AddBook")]
+    public async Task<IActionResult> Add([FromBody] Book entity)
     {
-        bool result = await _authorService.AddAsync(entity);
+      bool result=await _bookService.AddAsync(entity);
         if (result)
             return Ok();
         return BadRequest();
-
+        
     }
     [HttpPost]
     [Route("AddRange")]
-    [Authorize(Roles = "AddAuthor")]
-    public async Task<IActionResult> AddRangeAsync([FromBody] IEnumerable<Author> entities)
+    [Authorize(Roles = "AddBook")]
+    public async Task<IActionResult> AddRangeAsync([FromBody] IQueryable<Book> entities)
     {
-        bool result = await _authorService.AddRangeAsync(entities);
+        bool result = await _bookService.AddRangeAsync(entities);
         if (result)
             return Ok();
         return BadRequest();
     }
     [HttpGet]
     [Route("GetAll")]
-    [Authorize(Roles = "GetAuthor")]
+    [Authorize(Roles = "GetBook")]
     public IActionResult GetAll()
     {
-        IEnumerable<Author> books = _authorService.GetAll();
+      IEnumerable<Book> books=_bookService.GetAll();
         return Ok(books);
     }
     [HttpGet]
@@ -50,28 +50,27 @@ public class AuthorController : ControllerBase
     [Authorize(Roles = "GetBook")]
     public async Task<IActionResult> GetByIdAsync(int id)
     {
-        Author book = await _authorService.GetByIdAsync(id);
+        Book book = await _bookService.GetByIdAsync(id);
         return Ok(book);
     }
     [HttpPut]
     [Route("Update")]
-    [Authorize(Roles = "UpdateAuthor")]
-    public async Task<IActionResult> UpdateAsync([FromBody] Author entity)
+    [Authorize(Roles = "UpdateBook")]
+    public async Task<IActionResult> UpdateAsync([FromBody] Book entity)
     {
-        bool result = await _authorService.UpdateAsync(entity);
-        if (result)
+      bool result = await _bookService.UpdateAsync(entity);
+        if(result)
             return Ok();
         return BadRequest();
     }
     [HttpDelete]
     [Route("Delete")]
-    [Authorize(Roles = "DeleteAuthor")]
+    [Authorize(Roles = "DeleteBook")]
     public async Task<IActionResult> DeleteAsync(int id)
     {
-        bool result = await _authorService.DeleteAsync(id);
+        bool result = await _bookService.DeleteAsync(id);
         if (result)
             return Ok();
         return BadRequest();
     }
-
 }

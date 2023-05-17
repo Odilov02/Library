@@ -10,15 +10,14 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Infrastructure
+namespace Infrastructure;
+
+public static class Startup
 {
-    public static class Startup
+    public static IServiceCollection AddInfrastructureServices(this IServiceCollection service, IConfiguration configuration)
     {
-        public static IServiceCollection AddInfrastructureServices(this IServiceCollection service, IConfiguration configuration)
-        {
-            service.AddDbContext<AppDbContext>(options => options.UseNpgsql(configuration.GetConnectionString("default")));
-            service.AddScoped<IAplicationDbContext, AppDbContext>();
-            return service;
-        }
+        service.AddDbContext<AppDbContext>(options => options.UseNpgsql(configuration.GetConnectionString("default")));
+        service.AddScoped<IAplicationDbContext, AppDbContext>();
+        return service;
     }
 }

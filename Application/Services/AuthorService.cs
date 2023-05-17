@@ -22,7 +22,7 @@ namespace Application.Services
             throw new NotImplementedException();
         }
 
-        public Task<bool> AddRangeAsync(IQueryable<Author> entity)
+        public Task<bool> AddRangeAsync(IEnumerable<Author> entities)
         {
             throw new NotImplementedException();
         }
@@ -32,7 +32,7 @@ namespace Application.Services
             throw new NotImplementedException();
         }
 
-        public IQueryable<Author> GetAll()
+        public IEnumerable<Author> GetAll()
         {
             throw new NotImplementedException();
         }

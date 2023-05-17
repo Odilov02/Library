@@ -9,10 +9,10 @@ namespace Application.Interface
 {
     public interface IRepository<T> where T : class
     {
-        public Task<T> GetByIdAsync(int id);
-        IQueryable<T> GetAll();
+        Task<T> GetByIdAsync(int id);
+        IEnumerable<T> GetAll();
         Task<bool> AddAsync(T entity);
-        Task<bool> AddRangeAsync(IQueryable<T> entity);
+        Task<bool> AddRangeAsync(IEnumerable<T> entities);
         Task<bool> UpdateAsync(T entity);
         Task<bool> DeleteAsync(int id);
 

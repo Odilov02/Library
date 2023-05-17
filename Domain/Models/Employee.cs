@@ -26,6 +26,7 @@ namespace Domain.Models
         [Column("category_id")]
         [JsonPropertyName("category_id")]
         public int CategoryId { get; set; }
+        [JsonIgnore]
         public required Category Category { get; set; }
     }
 }

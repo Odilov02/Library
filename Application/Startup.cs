@@ -1,4 +1,5 @@
 ﻿using Application.Interface;
+using Application.Interfase;
 using Application.Services;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -19,6 +20,7 @@ namespace Application
             service.AddScoped<IBookService, BookService>();
             service.AddScoped<ICategoryService, CategoryService>();
             service.AddScoped<IEmployeeService, EmployeeService>();
+            service.AddScoped<IUserService, UserService>();
 
             return service;
         }

@@ -19,7 +19,9 @@ namespace Domain.Models
         [Column("name")]
         [JsonPropertyName("name")]
         public string Name { get; set; }
+        [JsonIgnore]
         public required Employee Employee { get; set; }
+        [JsonIgnore]
         public List<Book> Books { get; set; }
     }
 }

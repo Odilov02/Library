@@ -14,34 +14,33 @@ namespace Application.Services
         }
         public async Task<bool> AddAsync(Category entity)
         {
-            await _db.Category.AddAsync(entity);
+            await _db.Categories.AddAsync(entity);
             return true;
         }
 
-        public async Task<bool> AddRangeAsync(IQueryable<Category> entity)
+        public async Task<bool> AddRangeAsync(IEnumerable<Category> entities)
         {
-            await _db.Category.AddRangeAsync(entity);
+            await _db.Categories.AddRangeAsync(entities);
             return true;
         }
-
         public async Task<bool> DeleteAsync(int id)
         {
-            Category? entity = await _db.Category.FindAsync(id);
-            _db.Category.Remove(entity!);
+            Category? entity = await _db.Categories.FindAsync(id);
+            _db.Categories.Remove(entity!);
             return true;
         }
 
-        public IQueryable<Category> GetAll()
+        public IEnumerable<Category> GetAll()
         {
             throw new NotImplementedException();
         }
 
-        public Task<Category> GetByIdAsync(int id)
+        public async Task<Category> GetByIdAsync(int id)
         {
-            Category entity
+            throw new NotImplementedException();
         }
 
-        public Task<bool> UpdateAsync(Category entity)
+        public async Task<bool> UpdateAsync(Category entity)
         {
             throw new NotImplementedException();
         }

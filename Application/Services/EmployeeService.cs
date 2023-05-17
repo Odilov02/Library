@@ -22,17 +22,17 @@ namespace Application.Services
             throw new NotImplementedException();
         }
 
-        public Task<bool> AddRangeAsync(IQueryable<Employee> entity)
+        public async Task<bool> AddRangeAsync(IEnumerable<Employee> entities)
         {
             throw new NotImplementedException();
         }
 
-        public Task<bool> DeleteAsync(int id)
+        public async Task<bool> DeleteAsync(int id)
         {
             throw new NotImplementedException();
         }
 
-        public IQueryable<Employee> GetAll()
+        public IEnumerable<Employee> GetAll()
         {
             throw new NotImplementedException();
         }

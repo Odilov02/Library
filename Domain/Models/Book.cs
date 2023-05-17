@@ -22,10 +22,12 @@ namespace Domain.Models
         [JsonPropertyName("create_date")]
         [Column("create_date")]
         public DateTime CreateDate { get; set; }
-        List<AuthorBook>? AuthorBooks { get; set; }
+        [JsonIgnore]
+        IEnumerable<AuthorBook>? AuthorBooks { get; set; }
         [Column("category_id")]
         [JsonPropertyName("category_id")]
         public int CategoryId { get; set; }
+        [JsonIgnore]
         public required Category Category { get; set; }
     }
 }

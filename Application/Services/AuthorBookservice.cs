@@ -24,9 +24,9 @@ namespace Application.Services
             return true;
         }
 
-        public async Task<bool> AddRangeAsync(IQueryable<AuthorBook> entity)
+        public async Task<bool> AddRangeAsync(IEnumerable<AuthorBook> entities)
         {
-            await _db.AuthorBooks.AddRangeAsync(entity);
+            await _db.AuthorBooks.AddRangeAsync(entities);
             return true;
         }
 
@@ -38,7 +38,7 @@ namespace Application.Services
             return true;
         }
 
-        public IQueryable<AuthorBook> GetAll()
+        public IEnumerable<AuthorBook> GetAll()
         {
             IQueryable<AuthorBook> authorBooks = _db.AuthorBooks;
             return authorBooks;
@@ -53,5 +53,6 @@ namespace Application.Services
         {
             throw new NotImplementedException();
         }
+
     }
 }
