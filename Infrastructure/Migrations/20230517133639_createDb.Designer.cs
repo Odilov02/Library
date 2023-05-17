@@ -12,8 +12,8 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace Infrastructure.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20230517053632_CreateDb")]
-    partial class CreateDb
+    [Migration("20230517133639_createDb")]
+    partial class createDb
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -62,12 +62,12 @@ namespace Infrastructure.Migrations
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
-                    b.Property<int>("AuthorId")
+                    b.Property<int?>("AuthorId")
                         .HasColumnType("integer")
                         .HasColumnName("author_id")
                         .HasAnnotation("Relational:JsonPropertyName", "author_id");
 
-                    b.Property<int>("BookId")
+                    b.Property<int?>("BookId")
                         .HasColumnType("integer")
                         .HasColumnName("book_id")
                         .HasAnnotation("Relational:JsonPropertyName", "book_id");
@@ -145,7 +145,7 @@ namespace Infrastructure.Migrations
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
-                    b.Property<int>("CategoryId")
+                    b.Property<int?>("CategoryId")
                         .HasColumnType("integer")
                         .HasColumnName("category_id")
                         .HasAnnotation("Relational:JsonPropertyName", "category_id");
@@ -183,11 +183,11 @@ namespace Infrastructure.Migrations
                         .HasColumnType("integer")
                         .HasColumnName("role_id");
 
-                    b.Property<int>("USerId")
+                    b.Property<int?>("USerId")
                         .HasColumnType("integer")
                         .HasColumnName("user_id");
 
-                    b.Property<int>("UsersId")
+                    b.Property<int?>("UsersId")
                         .HasColumnType("integer");
 
                     b.HasKey("Id");
@@ -213,10 +213,6 @@ namespace Infrastructure.Migrations
                         .HasColumnType("text")
                         .HasColumnName("permission_name");
 
-                    b.Property<int>("RolePermissionId")
-                        .HasColumnType("integer")
-                        .HasColumnName("role_permission_id");
-
                     b.HasKey("Id");
 
                     b.ToTable("permission");
@@ -236,14 +232,6 @@ namespace Infrastructure.Migrations
                         .HasColumnType("text")
                         .HasColumnName("role_name");
 
-                    b.Property<int>("RolePermissionId")
-                        .HasColumnType("integer")
-                        .HasColumnName("role_permission_id");
-
-                    b.Property<int>("RoleUSerId")
-                        .HasColumnType("integer")
-                        .HasColumnName("role_user_id");
-
                     b.HasKey("Id");
 
                     b.ToTable("role");
@@ -258,7 +246,7 @@ namespace Infrastructure.Migrations
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
-                    b.Property<int>("PermissionId")
+                    b.Property<int?>("PermissionId")
                         .HasColumnType("integer")
                         .HasColumnName("permission_id");
 
@@ -322,10 +310,6 @@ namespace Infrastructure.Migrations
                         .HasColumnType("text")
                         .HasColumnName("password");
 
-                    b.Property<int>("RoleUSerId")
-                        .HasColumnType("integer")
-                        .HasColumnName("role_user_id");
-
                     b.Property<string>("UserName")
                         .IsRequired()
                         .HasColumnType("text")
@@ -340,15 +324,11 @@ namespace Infrastructure.Migrations
                 {
                     b.HasOne("Domain.Models.Author", "Author")
                         .WithMany()
-                        .HasForeignKey("AuthorId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("AuthorId");
 
                     b.HasOne("Domain.Models.Book", "Book")
                         .WithMany()
-                        .HasForeignKey("BookId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("BookId");
 
                     b.Navigation("Author");
 
@@ -370,9 +350,7 @@ namespace Infrastructure.Migrations
                 {
                     b.HasOne("Domain.Models.Category", "Category")
                         .WithOne("Employee")
-                        .HasForeignKey("Domain.Models.Employee", "CategoryId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("Domain.Models.Employee", "CategoryId");
 
                     b.Navigation("Category");
                 });
@@ -387,9 +365,7 @@ namespace Infrastructure.Migrations
 
                     b.HasOne("Domain.Models.Users", "Users")
                         .WithMany("RoleUsers")
-                        .HasForeignKey("UsersId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("UsersId");
 
                     b.Navigation("Role");
 
@@ -400,9 +376,7 @@ namespace Infrastructure.Migrations
                 {
                     b.HasOne("Domain.Models.Roles.Permission", "permission")
                         .WithMany("rolePermissions")
-                        .HasForeignKey("PermissionId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("PermissionId");
 
                     b.HasOne("Domain.Models.Roles.Role", "Role")
                         .WithMany("RolePermissions")
@@ -419,8 +393,7 @@ namespace Infrastructure.Migrations
                 {
                     b.Navigation("Books");
 
-                    b.Navigation("Employee")
-                        .IsRequired();
+                    b.Navigation("Employee");
                 });
 
             modelBuilder.Entity("Domain.Models.Roles.Permission", b =>

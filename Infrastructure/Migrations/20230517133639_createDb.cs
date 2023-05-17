@@ -7,7 +7,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace Infrastructure.Migrations
 {
     /// <inheritdoc />
-    public partial class CreateDb : Migration
+    public partial class createDb : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -45,8 +45,7 @@ namespace Infrastructure.Migrations
                 {
                     permission_id = table.Column<int>(type: "integer", nullable: false)
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
-                    permission_name = table.Column<string>(type: "text", nullable: false),
-                    role_permission_id = table.Column<int>(type: "integer", nullable: false)
+                    permission_name = table.Column<string>(type: "text", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -74,9 +73,7 @@ namespace Infrastructure.Migrations
                 {
                     role_id = table.Column<int>(type: "integer", nullable: false)
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
-                    role_name = table.Column<string>(type: "text", nullable: false),
-                    role_permission_id = table.Column<int>(type: "integer", nullable: false),
-                    role_user_id = table.Column<int>(type: "integer", nullable: false)
+                    role_name = table.Column<string>(type: "text", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -91,8 +88,7 @@ namespace Infrastructure.Migrations
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
                     user_name = table.Column<string>(type: "text", nullable: false),
                     password = table.Column<string>(type: "text", nullable: false),
-                    email = table.Column<string>(type: "text", nullable: false),
-                    role_user_id = table.Column<int>(type: "integer", nullable: false)
+                    email = table.Column<string>(type: "text", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -128,7 +124,7 @@ namespace Infrastructure.Migrations
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
                     name = table.Column<string>(type: "text", nullable: false),
                     phone_number = table.Column<string>(type: "text", nullable: false),
-                    category_id = table.Column<int>(type: "integer", nullable: false)
+                    category_id = table.Column<int>(type: "integer", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -137,8 +133,7 @@ namespace Infrastructure.Migrations
                         name: "FK_employee_category_category_id",
                         column: x => x.category_id,
                         principalTable: "category",
-                        principalColumn: "category_id",
-                        onDelete: ReferentialAction.Cascade);
+                        principalColumn: "category_id");
                 });
 
             migrationBuilder.CreateTable(
@@ -148,7 +143,7 @@ namespace Infrastructure.Migrations
                     role_permission_id = table.Column<int>(type: "integer", nullable: false)
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
                     role_id = table.Column<int>(type: "integer", nullable: false),
-                    permission_id = table.Column<int>(type: "integer", nullable: false)
+                    permission_id = table.Column<int>(type: "integer", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -157,8 +152,7 @@ namespace Infrastructure.Migrations
                         name: "FK_role_permission_permission_permission_id",
                         column: x => x.permission_id,
                         principalTable: "permission",
-                        principalColumn: "permission_id",
-                        onDelete: ReferentialAction.Cascade);
+                        principalColumn: "permission_id");
                     table.ForeignKey(
                         name: "FK_role_permission_role_role_id",
                         column: x => x.role_id,
@@ -174,8 +168,8 @@ namespace Infrastructure.Migrations
                     role_user_id = table.Column<int>(type: "integer", nullable: false)
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
                     role_id = table.Column<int>(type: "integer", nullable: false),
-                    user_id = table.Column<int>(type: "integer", nullable: false),
-                    UsersId = table.Column<int>(type: "integer", nullable: false)
+                    user_id = table.Column<int>(type: "integer", nullable: true),
+                    UsersId = table.Column<int>(type: "integer", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -190,8 +184,7 @@ namespace Infrastructure.Migrations
                         name: "FK_role_user_user_UsersId",
                         column: x => x.UsersId,
                         principalTable: "user",
-                        principalColumn: "user_id",
-                        onDelete: ReferentialAction.Cascade);
+                        principalColumn: "user_id");
                 });
 
             migrationBuilder.CreateTable(
@@ -200,8 +193,8 @@ namespace Infrastructure.Migrations
                 {
                     author_book_id = table.Column<int>(type: "integer", nullable: false)
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
-                    author_id = table.Column<int>(type: "integer", nullable: false),
-                    book_id = table.Column<int>(type: "integer", nullable: false)
+                    author_id = table.Column<int>(type: "integer", nullable: true),
+                    book_id = table.Column<int>(type: "integer", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -210,14 +203,12 @@ namespace Infrastructure.Migrations
                         name: "FK_author_book_author_author_id",
                         column: x => x.author_id,
                         principalTable: "author",
-                        principalColumn: "author_id",
-                        onDelete: ReferentialAction.Cascade);
+                        principalColumn: "author_id");
                     table.ForeignKey(
                         name: "FK_author_book_book_book_id",
                         column: x => x.book_id,
                         principalTable: "book",
-                        principalColumn: "book_id",
-                        onDelete: ReferentialAction.Cascade);
+                        principalColumn: "book_id");
                 });
 
             migrationBuilder.CreateIndex(

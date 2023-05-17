@@ -20,8 +20,8 @@ namespace Domain.Models
         [JsonPropertyName("name")]
         public string Name { get; set; }
         [JsonIgnore]
-        public required Employee Employee { get; set; }
+        public  Employee? Employee { get; set; }
         [JsonIgnore]
-        public List<Book> Books { get; set; }
+        public List<Book>? Books { get; set; }
     }
 }

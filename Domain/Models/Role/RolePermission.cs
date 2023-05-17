@@ -4,6 +4,7 @@ using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Text;
+using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 
 namespace Domain.Models.Roles
@@ -16,9 +17,11 @@ namespace Domain.Models.Roles
         public int Id { get; set; }
         [Column("role_id")]
         public int RoleId { get; set; }
-        public Role Role { get; set; }
+        [JsonIgnore]
+        public Role? Role { get; set; }
         [Column("permission_id")]
-        public int PermissionId { get; set; }
-        public Permission permission { get; set; }
+        public int? PermissionId { get; set; }
+        [JsonIgnore]
+        public Permission? permission { get; set; }
     }
 }

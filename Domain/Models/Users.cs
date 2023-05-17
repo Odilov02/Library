@@ -22,9 +22,7 @@ namespace Domain.Models
         [EmailAddress]
         [Column("email")]
         public string Email { get; set; }
-        [Column("role_user_id")]
-        public int RoleUSerId { get; set; }
         [JsonIgnore]
-        public IEnumerable<RoleUser> RoleUsers { get; set; }
+        public IEnumerable<RoleUser>? RoleUsers { get; set; }
     }
 }

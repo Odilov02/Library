@@ -18,13 +18,13 @@ namespace Domain.Models
         public int Id { get; set; }
         [JsonPropertyName("author_id")]
         [Column("author_id")]
-        public int AuthorId { get; set; }
+        public int? AuthorId { get; set; }
         [JsonIgnore]
-        public required Author Author { get; set; }
+        public required Author? Author { get; set; }
         [Column("book_id")]
         [JsonPropertyName("book_id")]
-        public int BookId { get; set; }
+        public int? BookId { get; set; }
         [JsonIgnore]
-        public required Book Book { get; set; }
+        public required Book? Book { get; set; }
     }
 }
