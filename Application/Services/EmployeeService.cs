@@ -17,34 +17,96 @@ namespace Application.Services
         {
             _db = db;
         }
-        public Task<bool> AddAsync(Employee entity)
+        public async Task<bool> AddAsync(Employee entity)
         {
-            throw new NotImplementedException();
+            try
+            {
+            await _db.Employees.AddAsync(entity);
+            await _db.SaveChangesAsync();
+                return true;
+            }
+            catch (Exception)
+            {
+
+                return false;
+            }
         }
 
-        public async Task<bool> AddRangeAsync(IEnumerable<Employee> entities)
+        public async Task<bool> AddRangeAsync(IEnumerable<Employee> entity)
         {
-            throw new NotImplementedException();
+            try
+            {
+                await _db.Employees.AddRangeAsync(entity);
+                await _db.SaveChangesAsync();
+                return true;
+            }
+            catch (Exception)
+            {
+
+                return false;
+            }
         }
 
         public async Task<bool> DeleteAsync(int id)
         {
-            throw new NotImplementedException();
+            try
+            {
+                Employee? entity = await _db.Employees.FindAsync(id);
+                _db.Employees.Remove(entity!);
+                await _db.SaveChangesAsync();
+                return true;
+            }
+            catch (Exception)
+            {
+
+                return false;
+            }
+
         }
 
         public IEnumerable<Employee> GetAll()
         {
-            throw new NotImplementedException();
+            try
+            {
+                IEnumerable<Employee> entities = _db.Employees;
+                return entities;
+            }
+            catch (Exception)
+            {
+
+                return null!;
+            }
         }
 
-        public Task<Employee> GetByIdAsync(int id)
+        public async Task<Employee> GetByIdAsync(int id)
         {
-            throw new NotImplementedException();
+            try
+            {
+                Employee? employee = await _db.Employees.FindAsync(id);
+                return employee!;
+            }
+            catch (Exception)
+            {
+
+                return null!;
+            }
+
         }
 
-        public Task<bool> UpdateAsync(Employee entity)
+        public async Task<bool> UpdateAsync(Employee entity)
         {
-            throw new NotImplementedException();
+            try
+            {
+                _db.Employees.Update(entity);
+                await _db.SaveChangesAsync();
+                return true;
+            }
+            catch (Exception)
+            {
+
+                return false;
+            }
+
         }
     }
 }

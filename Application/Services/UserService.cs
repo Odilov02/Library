@@ -1,12 +1,6 @@
 ﻿using Application.Abstaction;
 using Application.Interfase;
 using Domain.Models;
-using Microsoft.AspNetCore.Hosting;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Application.Services
 {
@@ -20,35 +14,97 @@ namespace Application.Services
         }
         public async Task<bool> AddAsync(Users entity)
         {
-          await _db.Users.AddAsync(entity);
-            _db.SaveChangesAsync();
-            return true;
+            try
+            {
+                await _db.Users.AddAsync(entity);
+                await _db.SaveChangesAsync();
+                return true;
+
+            }
+            catch (Exception)
+            {
+
+                return false;
+            }
         }
 
         public async Task<bool> AddRangeAsync(IEnumerable<Users> entities)
         {
-            await _db.Users.AddRangeAsync(entities);
-            return true;
+            try
+            {
+                await _db.Users.AddRangeAsync(entities);
+                await _db.SaveChangesAsync();
+                return true;
+
+            }
+            catch (Exception)
+            {
+
+                return false;
+            }
         }
 
-        public Task<bool> DeleteAsync(int id)
+        public async Task<bool> DeleteAsync(int id)
         {
-            throw new NotImplementedException();
+            try
+            {
+                Users? user = await _db.Users.FindAsync(id);
+                _db.Users.Remove(user!);
+                await _db.SaveChangesAsync();
+                return true;
+
+            }
+            catch (Exception)
+            {
+
+                return false;
+            }
         }
 
         public IEnumerable<Users> GetAll()
         {
-            throw new NotImplementedException();
+            try
+            {
+                IEnumerable<Users> users = _db.Users;
+                return users;
+
+            }
+            catch (Exception)
+            {
+
+                return null!;
+            }
         }
 
-        public Task<Users> GetByIdAsync(int id)
+        public async Task<Users> GetByIdAsync(int id)
         {
-            throw new NotImplementedException();
+            try
+            {
+                Users? user = await _db.Users.FindAsync(id);
+                return user!;
+
+            }
+            catch (Exception)
+            {
+
+                return null!;
+            }
         }
 
-        public Task<bool> UpdateAsync(Users entity)
+        public async Task<bool> UpdateAsync(Users entity)
         {
-            throw new NotImplementedException();
+            try
+            {
+                _db.Users.Update(entity);
+                await _db.SaveChangesAsync();
+                return true;
+
+            }
+            catch (Exception)
+            {
+
+                return false;
+            }
         }
     }
 }

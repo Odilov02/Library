@@ -1,26 +1,30 @@
 ﻿using Application.Abstaction;
-using Application.Interface;
+using Application.Interfase;
 using Domain.Models;
-using Microsoft.EntityFrameworkCore;
+using Domain.Models.Tokens;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 
 namespace Application.Services
 {
-    public class AuthorBookService : IAuthorBookService
+    public class RefreshTokenService:IRefreshTokenService
     {
-        private readonly IAplicationDbContext _db;
+        private IAplicationDbContext _db;
 
-        public AuthorBookService(IAplicationDbContext db)
+        public RefreshTokenService(IAplicationDbContext db)
         {
             _db = db;
         }
-        public async Task<bool> AddAsync(AuthorBook entity)
+        public async Task<bool> AddAsync(RefreshToken entity)
         {
             try
             {
-                await _db.AuthorBooks.AddAsync(entity);
+                await _db.RefreshTokens.AddAsync(entity);
                 await _db.SaveChangesAsync();
                 return true;
-
             }
             catch (Exception)
             {
@@ -29,14 +33,13 @@ namespace Application.Services
             }
         }
 
-        public async Task<bool> AddRangeAsync(IEnumerable<AuthorBook> entities)
+        public async Task<bool> AddRangeAsync(IEnumerable<RefreshToken> entities)
         {
             try
             {
-                await _db.AuthorBooks.AddRangeAsync(entities);
+                await _db.RefreshTokens.AddRangeAsync(entities);
                 await _db.SaveChangesAsync();
                 return true;
-
             }
             catch (Exception)
             {
@@ -49,53 +52,8 @@ namespace Application.Services
         {
             try
             {
-                AuthorBook? entity = await _db.AuthorBooks.FirstOrDefaultAsync(x => x.Id == id);
-                if (entity == null) return false;
-                _db.AuthorBooks.Remove(entity!);
-                return true;
-
-            }
-            catch (Exception)
-            {
-
-                return false;
-            }
-        }
-
-        public IEnumerable<AuthorBook> GetAll()
-        {
-            try
-            {
-                IQueryable<AuthorBook> authorBooks = _db.AuthorBooks;
-                return authorBooks;
-
-            }
-            catch (Exception)
-            {
-
-                return null!;
-            }
-        }
-
-        public async Task<AuthorBook> GetByIdAsync(int id)
-        {
-            try
-            {
-                AuthorBook? result = await _db.AuthorBooks.FirstOrDefaultAsync(x => x.Equals(id));
-                return result!;
-            }
-            catch (Exception)
-            {
-
-                return null!;
-            }
-        }
-
-        public async Task<bool> UpdateAsync(AuthorBook entity)
-        {
-            try
-            {
-                _db.AuthorBooks.Update(entity);
+                RefreshToken? entity = await _db.RefreshTokens.FindAsync(id);
+                _db.RefreshTokens.Remove(entity!);
                 await _db.SaveChangesAsync();
                 return true;
             }
@@ -104,7 +62,54 @@ namespace Application.Services
 
                 return false;
             }
+
+        }
+
+        public IEnumerable<RefreshToken> GetAll()
+        {
+            try
+            {
+                IEnumerable<RefreshToken> entities = _db.RefreshTokens;
+                return entities;
+            }
+            catch (Exception)
+            {
+
+                return null!;
+            }
+        }
+
+        public async Task<RefreshToken> GetByIdAsync(int id)
+        {
+            try
+            {
+                RefreshToken? entity = await _db.RefreshTokens.FindAsync(id);
+                return entity!;
+            }
+            catch (Exception)
+            {
+
+                return null!;
+            }
+
+        }
+
+        public async Task<bool> UpdateAsync(RefreshToken entity)
+        {
+            try
+            {
+                _db.RefreshTokens.Update(entity);
+                await _db.SaveChangesAsync();
+                return true;
+            }
+            catch (Exception)
+            {
+
+                return false;
+            }
+
         }
 
     }
 }
+

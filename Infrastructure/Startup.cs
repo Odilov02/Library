@@ -16,6 +16,7 @@ public static class Startup
 {
     public static IServiceCollection AddInfrastructureServices(this IServiceCollection service, IConfiguration configuration)
     {
+        AppContext.SetSwitch("Npgsql.EnableLegacyTimestampBehavior", true);
         service.AddDbContext<AppDbContext>(options => options.UseNpgsql(configuration.GetConnectionString("default")));
         service.AddScoped<IAplicationDbContext, AppDbContext>();
         return service;

@@ -14,35 +14,93 @@ namespace Application.Services
         }
         public async Task<bool> AddAsync(Category entity)
         {
+            try
+            {
             await _db.Categories.AddAsync(entity);
-            return true;
+            await _db.SaveChangesAsync();
+                return true;
+            }
+            catch (Exception)
+            {
+
+                return false;
+            }
         }
 
         public async Task<bool> AddRangeAsync(IEnumerable<Category> entities)
         {
-            await _db.Categories.AddRangeAsync(entities);
-            return true;
+            try
+            {
+                await _db.Categories.AddRangeAsync(entities);
+                await _db.SaveChangesAsync();
+                return true;
+            }
+            catch (Exception)
+            {
+
+                return false;
+            }
         }
+
         public async Task<bool> DeleteAsync(int id)
         {
-            Category? entity = await _db.Categories.FindAsync(id);
-            _db.Categories.Remove(entity!);
-            return true;
+            try
+            {
+                Category? entity = await _db.Categories.FindAsync(id);
+                _db.Categories.Remove(entity!);
+                await _db.SaveChangesAsync();
+                return true;
+            }
+            catch (Exception)
+            {
+
+                return false;
+            }
+
         }
 
         public IEnumerable<Category> GetAll()
         {
-            throw new NotImplementedException();
+            try
+            {
+                IEnumerable<Category> entities = _db.Categories;
+                return entities;
+            }
+            catch (Exception)
+            {
+
+                return null!;
+            }
         }
 
         public async Task<Category> GetByIdAsync(int id)
         {
-            throw new NotImplementedException();
+            try
+            {
+                Category? category = await _db.Categories.FindAsync(id);
+                return category!;
+            }
+            catch (Exception)
+            {
+
+                return null!;
+            }
+
         }
 
-        public async Task<bool> UpdateAsync(Category entity)
+         public async Task<bool> UpdateAsync(Category entity)
         {
-            throw new NotImplementedException();
+            try
+            {
+                _db.Categories.Update(entity);
+                await _db.SaveChangesAsync();
+                return true;
+            }
+            catch (Exception)
+            {
+
+                return false;
+            }
         }
     }
 }

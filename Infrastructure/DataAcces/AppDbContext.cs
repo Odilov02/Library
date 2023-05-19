@@ -1,7 +1,7 @@
 ﻿using Application.Abstaction;
 using Domain.Models;
 using Domain.Models.Roles;
-using Domain.Models.Token;
+using Domain.Models.Tokens;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -26,6 +26,7 @@ namespace Infrastructure.DataAcses
         public DbSet<Role> Roles { get; set; }
 
         public DbSet<RolePermission> RolePermissions { get; set; }
+        public DbSet<RoleUser> RoleUsers { get; set; }
 
         public AppDbContext(DbContextOptions<AppDbContext> options) : base(options)
         {

@@ -18,10 +18,10 @@ namespace Domain.Models
         public int Id { get; set; }
         [Column("name")]
         [JsonPropertyName("name")]
-        public string Name { get; set; }
+        public string? Name { get; set; }
         [Column("description")]
         [JsonPropertyName("description")]
-        public string Description { get; set; }
+        public string? Description { get; set; }
         [JsonIgnore]
         IEnumerable<AuthorBook>? AuthorBooks { get; set; }
     }

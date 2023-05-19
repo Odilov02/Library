@@ -16,9 +16,9 @@ namespace Domain.Models.Roles
         [Key,DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int Id { get; set; }
         [Column("role_name")]
-        public string Name { get; set; }
+        public string? Name { get; set; }
         [JsonIgnore]
-        public IEnumerable<RolePermission>? RolePermissions { get; set; }
+        public virtual IEnumerable<RolePermission>? RolePermissions { get; set; }
         [JsonIgnore]
         public IEnumerable<RoleUser>? RoleUsers { get; set; }
     }

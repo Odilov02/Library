@@ -1,26 +1,30 @@
-﻿using Application.Abstaction;
-using Application.Interface;
+﻿using Application.Interfase;
+using Domain.Models.Roles;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using Application.Abstaction;
 using Domain.Models;
-using Microsoft.EntityFrameworkCore;
 
 namespace Application.Services
 {
-    public class AuthorBookService : IAuthorBookService
+    public class PermissionService : IPermissionService
     {
-        private readonly IAplicationDbContext _db;
+        private IAplicationDbContext _db;
 
-        public AuthorBookService(IAplicationDbContext db)
+        public PermissionService(IAplicationDbContext db)
         {
             _db = db;
         }
-        public async Task<bool> AddAsync(AuthorBook entity)
+        public async Task<bool> AddAsync(Permission entity)
         {
             try
             {
-                await _db.AuthorBooks.AddAsync(entity);
+                await _db.Permissions.AddAsync(entity);
                 await _db.SaveChangesAsync();
                 return true;
-
             }
             catch (Exception)
             {
@@ -29,14 +33,13 @@ namespace Application.Services
             }
         }
 
-        public async Task<bool> AddRangeAsync(IEnumerable<AuthorBook> entities)
+        public async Task<bool> AddRangeAsync(IEnumerable<Permission> entities)
         {
             try
             {
-                await _db.AuthorBooks.AddRangeAsync(entities);
+                await _db.Permissions.AddRangeAsync(entities);
                 await _db.SaveChangesAsync();
                 return true;
-
             }
             catch (Exception)
             {
@@ -49,53 +52,8 @@ namespace Application.Services
         {
             try
             {
-                AuthorBook? entity = await _db.AuthorBooks.FirstOrDefaultAsync(x => x.Id == id);
-                if (entity == null) return false;
-                _db.AuthorBooks.Remove(entity!);
-                return true;
-
-            }
-            catch (Exception)
-            {
-
-                return false;
-            }
-        }
-
-        public IEnumerable<AuthorBook> GetAll()
-        {
-            try
-            {
-                IQueryable<AuthorBook> authorBooks = _db.AuthorBooks;
-                return authorBooks;
-
-            }
-            catch (Exception)
-            {
-
-                return null!;
-            }
-        }
-
-        public async Task<AuthorBook> GetByIdAsync(int id)
-        {
-            try
-            {
-                AuthorBook? result = await _db.AuthorBooks.FirstOrDefaultAsync(x => x.Equals(id));
-                return result!;
-            }
-            catch (Exception)
-            {
-
-                return null!;
-            }
-        }
-
-        public async Task<bool> UpdateAsync(AuthorBook entity)
-        {
-            try
-            {
-                _db.AuthorBooks.Update(entity);
+                Permission? entity = await _db.Permissions.FindAsync(id);
+                _db.Permissions.Remove(entity!);
                 await _db.SaveChangesAsync();
                 return true;
             }
@@ -104,6 +62,52 @@ namespace Application.Services
 
                 return false;
             }
+
+        }
+
+        public IEnumerable<Permission> GetAll()
+        {
+            try
+            {
+                IEnumerable<Permission> entities = _db.Permissions;
+                return entities;
+            }
+            catch (Exception)
+            {
+
+                return null!;
+            }
+        }
+
+        public async Task<Permission> GetByIdAsync(int id)
+        {
+            try
+            {
+                Permission? permission = await _db.Permissions.FindAsync(id);
+                return permission!;
+            }
+            catch (Exception)
+            {
+
+                return null!;
+            }
+
+        }
+
+        public async Task<bool> UpdateAsync(Permission entity)
+        {
+            try
+            {
+                _db.Permissions.Update(entity);
+                await _db.SaveChangesAsync();
+                return true;
+            }
+            catch (Exception)
+            {
+
+                return false;
+            }
+
         }
 
     }

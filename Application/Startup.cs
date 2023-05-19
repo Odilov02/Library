@@ -21,6 +21,12 @@ namespace Application
             service.AddScoped<ICategoryService, CategoryService>();
             service.AddScoped<IEmployeeService, EmployeeService>();
             service.AddScoped<IUserService, UserService>();
+            service.AddScoped<ITokenService, TokenService>();
+            service.AddScoped<IRefreshTokenService, RefreshTokenService>();
+            service.AddScoped<IRoleService, RoleService>();
+            service.AddScoped<IRolePermissionService, RolePermissionService>();
+            service.AddScoped<IRoleUserService, RoleUserService>();
+            service.AddScoped<IPermissionService, PermissionService>();
 
             return service;
         }

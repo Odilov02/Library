@@ -33,13 +33,11 @@ namespace Infrastructure.Migrations
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
                     b.Property<string>("Description")
-                        .IsRequired()
                         .HasColumnType("text")
                         .HasColumnName("description")
                         .HasAnnotation("Relational:JsonPropertyName", "description");
 
                     b.Property<string>("Name")
-                        .IsRequired()
                         .HasColumnType("text")
                         .HasColumnName("name")
                         .HasAnnotation("Relational:JsonPropertyName", "name");
@@ -94,7 +92,7 @@ namespace Infrastructure.Migrations
                         .HasAnnotation("Relational:JsonPropertyName", "category_id");
 
                     b.Property<DateTime>("CreateDate")
-                        .HasColumnType("timestamp with time zone")
+                        .HasColumnType("timestamp without time zone")
                         .HasColumnName("create_date")
                         .HasAnnotation("Relational:JsonPropertyName", "create_date");
 
@@ -180,12 +178,9 @@ namespace Infrastructure.Migrations
                         .HasColumnType("integer")
                         .HasColumnName("role_id");
 
-                    b.Property<int?>("USerId")
+                    b.Property<int>("UsersId")
                         .HasColumnType("integer")
-                        .HasColumnName("user_id");
-
-                    b.Property<int?>("UsersId")
-                        .HasColumnType("integer");
+                        .HasColumnName("users_id");
 
                     b.HasKey("Id");
 
@@ -225,7 +220,6 @@ namespace Infrastructure.Migrations
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
                     b.Property<string>("Name")
-                        .IsRequired()
                         .HasColumnType("text")
                         .HasColumnName("role_name");
 
@@ -260,7 +254,7 @@ namespace Infrastructure.Migrations
                     b.ToTable("role_permission");
                 });
 
-            modelBuilder.Entity("Domain.Models.Token.RefreshToken", b =>
+            modelBuilder.Entity("Domain.Models.Tokens.RefreshToken", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -270,16 +264,14 @@ namespace Infrastructure.Migrations
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
                     b.Property<DateTime>("ActiveDate")
-                        .HasColumnType("timestamp with time zone")
+                        .HasColumnType("timestamp without time zone")
                         .HasColumnName("active_date");
 
                     b.Property<string>("Token")
-                        .IsRequired()
                         .HasColumnType("text")
                         .HasColumnName("token");
 
                     b.Property<string>("UserName")
-                        .IsRequired()
                         .HasColumnType("text")
                         .HasColumnName("user_name");
 
@@ -298,17 +290,14 @@ namespace Infrastructure.Migrations
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
                     b.Property<string>("Email")
-                        .IsRequired()
                         .HasColumnType("text")
                         .HasColumnName("email");
 
                     b.Property<string>("Password")
-                        .IsRequired()
                         .HasColumnType("text")
                         .HasColumnName("password");
 
                     b.Property<string>("UserName")
-                        .IsRequired()
                         .HasColumnType("text")
                         .HasColumnName("user_name");
 
@@ -362,7 +351,9 @@ namespace Infrastructure.Migrations
 
                     b.HasOne("Domain.Models.Users", "Users")
                         .WithMany("RoleUsers")
-                        .HasForeignKey("UsersId");
+                        .HasForeignKey("UsersId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("Role");
 

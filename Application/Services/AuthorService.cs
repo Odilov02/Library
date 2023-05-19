@@ -1,11 +1,6 @@
 ﻿using Application.Abstaction;
 using Application.Interface;
 using Domain.Models;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Application.Services
 {
@@ -17,34 +12,93 @@ namespace Application.Services
         {
             _db = db;
         }
-        public Task<bool> AddAsync(Author entity)
+        public async Task<bool> AddAsync(Author entity)
         {
-            throw new NotImplementedException();
+            try
+            {
+                _db.Authors.Add(entity);
+                await _db.SaveChangesAsync();
+                return true;
+            }
+            catch (Exception)
+            {
+
+                return false;
+            }
         }
 
-        public Task<bool> AddRangeAsync(IEnumerable<Author> entities)
+        public async Task<bool> AddRangeAsync(IEnumerable<Author> entities)
         {
-            throw new NotImplementedException();
+            try
+            {
+                _db.Authors.AddRange(entities);
+                await _db.SaveChangesAsync();
+                return true;
+            }
+            catch (Exception)
+            {
+
+                return false;
+            }
         }
 
-        public Task<bool> DeleteAsync(int id)
+        public async Task<bool> DeleteAsync(int id)
         {
-            throw new NotImplementedException();
+            try
+            {
+                Author? entity = await _db.Authors.FindAsync(id);
+                _db.Authors.Remove(entity!);
+                await _db.SaveChangesAsync();
+                return true;
+            }
+            catch (Exception)
+            {
+
+                return false;
+            }
         }
 
         public IEnumerable<Author> GetAll()
         {
-            throw new NotImplementedException();
+            try
+            {
+                IEnumerable<Author> entities = _db.Authors;
+                return entities;
+            }
+            catch (Exception)
+            {
+
+                return null!;
+            }
         }
 
-        public Task<Author> GetByIdAsync(int id)
+        public async Task<Author> GetByIdAsync(int id)
         {
-            throw new NotImplementedException();
+            try
+            {
+                Author? result = await _db.Authors.FindAsync(id);
+                return result!;
+            }
+            catch (Exception)
+            {
+
+                return null!;
+            }
         }
 
-        public Task<bool> UpdateAsync(Author entity)
+        public async Task<bool> UpdateAsync(Author entity)
         {
-            throw new NotImplementedException();
+            try
+            {
+                _db.Authors.Update(entity);
+                await _db.SaveChangesAsync();
+                return true;
+            }
+            catch (Exception)
+            {
+
+                return false;
+            }
         }
     }
 }

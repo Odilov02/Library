@@ -16,13 +16,13 @@ namespace Domain.Models
         [Key,DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int Id { get; set; }
         [Column("user_name")]
-        public string UserName { get; set; }
+        public string? UserName { get; set; }
         [Column("password")]
-        public string Password { get; set; }
+        public string? Password { get; set; }
         [EmailAddress]
         [Column("email")]
-        public string Email { get; set; }
+        public string? Email { get; set; }
         [JsonIgnore]
-        public IEnumerable<RoleUser>? RoleUsers { get; set; }
+        public virtual IEnumerable<RoleUser>? RoleUsers { get; set; }
     }
 }

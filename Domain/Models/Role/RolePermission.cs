@@ -20,8 +20,8 @@ namespace Domain.Models.Roles
         [JsonIgnore]
         public Role? Role { get; set; }
         [Column("permission_id")]
-        public int? PermissionId { get; set; }
+        public int PermissionId { get; set; }
         [JsonIgnore]
-        public Permission? permission { get; set; }
+        public virtual Permission? permission { get; set; }
     }
 }

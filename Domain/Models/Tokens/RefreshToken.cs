@@ -6,7 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Domain.Models.Token
+namespace Domain.Models.Tokens
 {
     [Table("refresh_token")]
     public class RefreshToken
@@ -15,9 +15,9 @@ namespace Domain.Models.Token
         [Key,DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int Id { get; set; }
         [Column("user_name")]
-        public string UserName { get; set; }
+        public string? UserName { get; set; }
         [Column("token")]
-        public string Token { get; set; }
+        public string? Token { get; set; }
         [Column("active_date")]
         public DateTime ActiveDate { get; set; }
     }

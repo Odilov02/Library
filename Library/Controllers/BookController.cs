@@ -30,7 +30,7 @@ public class BookController:ControllerBase
     [HttpPost]
     [Route("AddRange")]
     [Authorize(Roles = "AddBook")]
-    public async Task<IActionResult> AddRangeAsync([FromBody] IQueryable<Book> entities)
+    public async Task<IActionResult> AddRangeAsync([FromBody] IEnumerable<Book> entities)
     {
         bool result = await _bookService.AddRangeAsync(entities);
         if (result)

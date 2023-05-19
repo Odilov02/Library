@@ -1,23 +1,23 @@
 ﻿using Application.Abstaction;
-using Application.Interface;
-using Domain.Models;
+using Application.Interfase;
+using Domain.Models.Roles;
 
 namespace Application.Services;
 
-public class BookService : IBookService
+public class RolePermissionService : IRolePermissionService
 {
     private IAplicationDbContext _db;
 
-    public BookService(IAplicationDbContext db)
+    public RolePermissionService(IAplicationDbContext db)
     {
         _db = db;
     }
-    public async Task<bool> AddAsync(Book entity)
+    public async Task<bool> AddAsync(RolePermission entity)
     {
         try
         {
-        await _db.Books.AddAsync(entity);
-        await _db.SaveChangesAsync();
+            await _db.RolePermissions.AddAsync(entity);
+            await _db.SaveChangesAsync();
             return true;
         }
         catch (Exception)
@@ -27,11 +27,11 @@ public class BookService : IBookService
         }
     }
 
-    public async Task<bool> AddRangeAsync(IEnumerable<Book> entities)
+    public async Task<bool> AddRangeAsync(IEnumerable<RolePermission> entities)
     {
         try
         {
-            await _db.Books.AddRangeAsync(entities);
+            await _db.RolePermissions.AddRangeAsync(entities);
             await _db.SaveChangesAsync();
             return true;
         }
@@ -46,8 +46,8 @@ public class BookService : IBookService
     {
         try
         {
-            Book? entity = await _db.Books.FindAsync(id);
-            _db.Books.Remove(entity!);
+            RolePermission? entity = await _db.RolePermissions.FindAsync(id);
+            _db.RolePermissions.Remove(entity!);
             await _db.SaveChangesAsync();
             return true;
         }
@@ -59,11 +59,11 @@ public class BookService : IBookService
 
     }
 
-    public IEnumerable<Book> GetAll()
+    public IEnumerable<RolePermission> GetAll()
     {
         try
         {
-            IEnumerable<Book> entities=_db.Books;
+            IEnumerable<RolePermission> entities = _db.RolePermissions;
             return entities;
         }
         catch (Exception)
@@ -73,26 +73,26 @@ public class BookService : IBookService
         }
     }
 
-    public async Task<Book> GetByIdAsync(int id)
+    public async Task<RolePermission> GetByIdAsync(int id)
     {
         try
         {
-            Book? book = await _db.Books.FindAsync(id);
-            return book!;
+            RolePermission? rolePermission = await _db.RolePermissions.FindAsync(id);
+            return rolePermission!;
         }
         catch (Exception)
         {
 
             return null!;
         }
-      
+
     }
 
-    public async Task<bool> UpdateAsync(Book entity)
+    public async Task<bool> UpdateAsync(RolePermission entity)
     {
         try
         {
-            _db.Books.Update(entity);
+            _db.RolePermissions.Update(entity);
             await _db.SaveChangesAsync();
             return true;
         }
@@ -101,7 +101,6 @@ public class BookService : IBookService
 
             return false;
         }
-       
-    }
 
+    }
 }

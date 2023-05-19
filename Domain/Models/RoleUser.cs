@@ -19,9 +19,9 @@ public class RoleUser
     [Column("role_id")]
     public int RoleId { get; set; }
     [JsonIgnore]
-    public Role Role { get; set; }
-    [Column("user_id")]
-    public int? USerId { get; set; }
+    public  Role? Role { get; set; }
+    [Column("users_id")]
+    public int UsersId { get; set; }
     [JsonIgnore]
     public Users? Users { get; set; }
 }

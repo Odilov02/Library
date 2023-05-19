@@ -7,7 +7,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace Infrastructure.Migrations
 {
     /// <inheritdoc />
-    public partial class createDb : Migration
+    public partial class CreateDb : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -18,8 +18,8 @@ namespace Infrastructure.Migrations
                 {
                     author_id = table.Column<int>(type: "integer", nullable: false)
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
-                    name = table.Column<string>(type: "text", nullable: false),
-                    description = table.Column<string>(type: "text", nullable: false)
+                    name = table.Column<string>(type: "text", nullable: true),
+                    description = table.Column<string>(type: "text", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -58,9 +58,9 @@ namespace Infrastructure.Migrations
                 {
                     token_id = table.Column<int>(type: "integer", nullable: false)
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
-                    user_name = table.Column<string>(type: "text", nullable: false),
-                    token = table.Column<string>(type: "text", nullable: false),
-                    active_date = table.Column<DateTime>(type: "timestamp with time zone", nullable: false)
+                    user_name = table.Column<string>(type: "text", nullable: true),
+                    token = table.Column<string>(type: "text", nullable: true),
+                    active_date = table.Column<DateTime>(type: "timestamp without time zone", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -73,7 +73,7 @@ namespace Infrastructure.Migrations
                 {
                     role_id = table.Column<int>(type: "integer", nullable: false)
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
-                    role_name = table.Column<string>(type: "text", nullable: false)
+                    role_name = table.Column<string>(type: "text", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -86,9 +86,9 @@ namespace Infrastructure.Migrations
                 {
                     user_id = table.Column<int>(type: "integer", nullable: false)
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
-                    user_name = table.Column<string>(type: "text", nullable: false),
-                    password = table.Column<string>(type: "text", nullable: false),
-                    email = table.Column<string>(type: "text", nullable: false)
+                    user_name = table.Column<string>(type: "text", nullable: true),
+                    password = table.Column<string>(type: "text", nullable: true),
+                    email = table.Column<string>(type: "text", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -102,7 +102,7 @@ namespace Infrastructure.Migrations
                     book_id = table.Column<int>(type: "integer", nullable: false)
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
                     name = table.Column<string>(type: "text", nullable: false),
-                    create_date = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
+                    create_date = table.Column<DateTime>(type: "timestamp without time zone", nullable: false),
                     category_id = table.Column<int>(type: "integer", nullable: false)
                 },
                 constraints: table =>
@@ -168,8 +168,7 @@ namespace Infrastructure.Migrations
                     role_user_id = table.Column<int>(type: "integer", nullable: false)
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
                     role_id = table.Column<int>(type: "integer", nullable: false),
-                    user_id = table.Column<int>(type: "integer", nullable: true),
-                    UsersId = table.Column<int>(type: "integer", nullable: true)
+                    users_id = table.Column<int>(type: "integer", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -181,10 +180,11 @@ namespace Infrastructure.Migrations
                         principalColumn: "role_id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_role_user_user_UsersId",
-                        column: x => x.UsersId,
+                        name: "FK_role_user_user_users_id",
+                        column: x => x.users_id,
                         principalTable: "user",
-                        principalColumn: "user_id");
+                        principalColumn: "user_id",
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -248,9 +248,9 @@ namespace Infrastructure.Migrations
                 column: "role_id");
 
             migrationBuilder.CreateIndex(
-                name: "IX_role_user_UsersId",
+                name: "IX_role_user_users_id",
                 table: "role_user",
-                column: "UsersId");
+                column: "users_id");
         }
 
         /// <inheritdoc />
